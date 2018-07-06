@@ -1,7 +1,7 @@
 # Playing_with_Python
 Tackling data challenges that occur in vote counts as well as in banking.
 
-![Voter Data](/vote-2018.jpg)
+![Voter Data](/your_voice_is_your_vote.png)
 **Project 1: PyPoll--Evaluating Voter Data**
 
 In the PyPoll_Main.py file, the program goes through over 3.5 million votes to deliver:
