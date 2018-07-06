@@ -5,20 +5,20 @@ Tackling data challenges that occur in vote counts as well as in banking.
 
 **Project 1: Evaluating Voter Data**
 
-In the PyPoll_Main.py file, the program goes through over 3.5 million votes to deliver:
-* Final tally of all votes cast
-* List of candidates as well as the percentage of votes received and the actual number of votes received
-* Determines the winner
-* Exports all results to a text file
+In the PyPoll_Main.py file, the program reviews more than 3.5 million votes to:
+* Find the total number of votes cast
+* See who are the candidates that received votes, plus the percentage of as well as number of votes received per candidate
+* Determine winning candidate
+* Export results to a text file
 
 
 ![Budget Data](/budget.jpg)
 
 **Project 2: Evaluating Monthly P/L**
 
-In the PyBank_Main.py file, the program reviews budget data to deliver:
-* Total number of months reviewed
-* Total Net (i.e., gross net) for all months 
-* Average monthly change in net
-* Month and amount for the best increase within this data set
-* Month and amount for the worst decrease within this data set
+In the PyBank_Main.py file, the program reviews profit/loss data to:
+* Find the total number of months reviewed
+* See the total net (i.e., gross net) for all months 
+* Determine the average monthly change in net
+* Parse the month and amount for the best increase--and on the flip side, the worst decrease 
+* Export results to a text file
