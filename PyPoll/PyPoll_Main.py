@@ -1,7 +1,3 @@
-#ASSUMPTIONS:
-#There are no duplicate voter IDs, thus no duplicate votes
-#There are only 4 candidates
-
 #STEPS:
 #1: IMPORT os and csv file
 #2: Create output VARIABLES
@@ -14,86 +10,77 @@
 #9: continued: plus the # of votes received per candidate
 #10: PRINT voting results per candidates
 #11: Find*, declare, and PRINT the winner
+#: Write results to a .txt file
 
+import os
+import csv
 
-#csv path: DO NOT TOUCH PATH
+#choose 1 or 2
+#file_num = 1
+
+# The directory path for csv file with election data: They use "file"
 voting_csv_path = os.path.join("Resources", "election_data.csv")
 
-#Create variables: DO NOT TOUCH VARIABLES
-total_votes = 0
-candidate_list =[]
+#Creates dictionary to be used for candidate name and vote count
+#STILL TRYING TO UNDERSTAND THE "WHY" THAT IT'S A DICTIONARY AND NOT A LIST!!! 
 votes = {}
-winner = ""
-winning_count = 0
 
-#open and read csv and set the comma as the separator: DO NOT TOUCH WITH STATEMENT 
+#Set variable for total votes and zero-out the counter
+total_votes = 0
+
+#Open and read csv and set the comma as the separator 
 with open(voting_csv_path, newline="") as vote_data_raw:
-	reader = csv.reader(vote_data_raw, delimiter=",")
-
-	for row in reader:
-		total_votes = total_votes + 1
-
-		candidate_name = row[2]
-
-		if candidate_name not in candidate_list:
-			candidate_list.append(candidate_name)
-			votes[candidate_name] = 0
-		votes[candidate_name] = votes[candidate_name] + 1
-
-#find vote percentages: DO NOT TOUCH FOR LOOP
-	for candidate_name in candidate_list:
-		candidate_votes = votes.get(candidate_name)
-		candidate_percentages = float(candidate_votes) / float(total_votes) * 100
-
-		#TESTING TESTING TESTING 1...not working
-		if (candidate_votes > winning_vote_count)
-		winning_vote_count = candidate_votes
-		winning_candidate = candidate_name
-
-		#TESTING TESTING TESTING 2...not working
-		vote_output = f"{candidate_name}: {candidate_percentages:.3f}% ({votes})"
+    csv_reader = csv.reader(vote_data_raw, delimiter=",")
 
 
-#Print a title
-print("Election Results")
+#Skips reading the header row
+    next(vote_data_raw, None)
 
-#Print a section separator
-print("------------------------")
+#This"for loop" finds candidates and tracks votes (increasing vote counts by 1 on each loop)
+#Sets up the function surrounding the votes dictionary's keys
+    for row in csv_reader:
+        total_votes = total_votes + 1
+        if row[2] in votes.keys():
+            votes[row[2]] = votes[row[2]] + 1
+        else:
+            votes[row[2]] = 1
+ 
+#Create open-ended (i.e., "empty") lists of candidate names and each candidate's vote count
+#Gathers dictionary keys/values and adds them to the lists
+candidates = []
+number_of_votes = []
+for key, value in votes.items():
+    candidates.append(key)
+    number_of_votes.append(value)
 
-#print number of votes in the election
-print("Total Votes: " + str(total_votes))
+# Create list for vote percentages, then the answer to the function will be added to this list
+vote_percentages = []
+for x in number_of_votes:
+    vote_percentages.append(round(x/total_votes*100, 1))
 
-#Print a section separator
-print("------------------------")
+# To simplify output, zips lists into a single variable
+election_results = list(zip(candidates, number_of_votes, vote_percentages))
 
-# Print out the candidate's name, vote percentage, and tally of votes
-print("Candidate: " + str(candidate_list))
-print("Percentage of Votes: " + str(candidate_percentages))
-print("Number of Votes: " + str(votes))
+#Create list to hold winner information (theoretically, there might be a tie)
+#STILL TRYING TO UNDERSTAND THE "WHY" looking at 1 and 0!!! 
+winner_list = []
+for candidate_name in election_results:
+    if max(number_of_votes) == candidate_name[1]:
+        winner_list.append(candidate_name[0])
 
-#Print a section separator
-print("------------------------")
-print("Winner:" + str(winning_vote_count))
+# Sort winner and make it a variable
+winner = winner_list[0]
 
+#prints to file
+output_results = os.path.join("Resources", "output_results.txt")
 
+with open(output_results, 'w') as txtfile:
+    txtfile.writelines('Election Results \n------------------------- \nTotal Votes: ' + str(total_votes) + 
+      '\n-------------------------\n')
+    for entry in election_results:
+        txtfile.writelines(entry[0] + ": " + str(entry[2]) +'%  (' + str(entry[1]) + ')\n')
+    txtfile.writelines('------------------------- \nWinner: ' + winner + '\n-------------------------')
 
-#Write results to a .txt file ... none of this works :-/
-#Version 1
-election_results_path = os.path.join("Resources", "election_results.txt")
-with open(election_results_path, "w") as election_results_txt_file:
-	fieldnames = ["Election Results", "Total Votes: ", "Winner: "]
-	writer. = txt.DictWriter(election_results_txt_file, fieldnames=fieldnames)
-	writer.writeheader()
-	writerows(election_results)
-
-
-#Version 2
-election_results_path = os.path.join("Resources", "election_results_txt_file.txt")
-with open(election_results_path, "w") as election_results_txt_file:
-	PyPoll_Main_test.py >> text.log
-
-
-#Version 3
-with open('results.txt', 'w') as f:
-    print('Results:', filename, file=f) 
-
+#prints file to terminal
+with open(output_results, 'r') as readfile:
+    print(readfile.read())
