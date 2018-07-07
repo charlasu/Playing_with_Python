@@ -15,14 +15,12 @@
 import os
 import csv
 
-#choose 1 or 2
-#file_num = 1
 
-# The directory path for csv file with election data: They use "file"
+# The directory path for csv file with election data: 
 voting_csv_path = os.path.join("Resources", "election_data.csv")
 
 #Creates dictionary to be used for candidate name and vote count
-#STILL TRYING TO UNDERSTAND THE "WHY" THAT IT'S A DICTIONARY AND NOT A LIST!!! 
+#THIS WORKS, YET STILL TRYING TO UNDERSTAND "WHY" IT'S A DICTIONARY AND NOT A LIST!!! 
 votes = {}
 
 #Set variable for total votes and zero-out the counter
@@ -31,7 +29,6 @@ total_votes = 0
 #Open and read csv and set the comma as the separator 
 with open(voting_csv_path, newline="") as vote_data_raw:
     csv_reader = csv.reader(vote_data_raw, delimiter=",")
-
 
 #Skips reading the header row
     next(vote_data_raw, None)
@@ -74,13 +71,13 @@ winner = winner_list[0]
 #prints to file
 output_results = os.path.join("Resources", "output_results.txt")
 
-with open(output_results, 'w') as txtfile:
-    txtfile.writelines('Election Results \n------------------------- \nTotal Votes: ' + str(total_votes) + 
-      '\n-------------------------\n')
+with open(output_results, "w") as txtfile:
+    txtfile.writelines("Election Results \n------------------------- \nTotal Votes: " + str(total_votes) + 
+      "\n-------------------------\n")
     for entry in election_results:
-        txtfile.writelines(entry[0] + ": " + str(entry[2]) +'%  (' + str(entry[1]) + ')\n')
-    txtfile.writelines('------------------------- \nWinner: ' + winner + '\n-------------------------')
+        txtfile.writelines(entry[0] + ": " + str(entry[2]) +"%  (" + str(entry[1]) + ")\n")
+    txtfile.writelines("------------------------- \nWinner: " + winner + "\n-------------------------")
 
 #prints file to terminal
-with open(output_results, 'r') as readfile:
+with open(output_results, "r") as readfile:
     print(readfile.read())
